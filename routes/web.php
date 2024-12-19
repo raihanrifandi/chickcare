@@ -21,6 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+
 Route::middleware(['auth'])->group(function () {
     // Route untuk pengguna biasa
     Route::middleware(['role:user'])->group(function () {

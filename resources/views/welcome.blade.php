@@ -1,81 +1,56 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Landing Page</title>
+    @vite('resources/css/app.css')
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    <title>Landing Page</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+        .animate-fade-in {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+<body class="bg-gray-100">
 
-    <!-- Navbar -->
-    <nav class="bg-white shadow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <a href="/" class="text-xl font-bold text-blue-600">Chickcare</a>
-                </div>
-                @if (Route::has('login'))
-                <div>
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="text-gray-600 hover:text-blue-600 font-semibold">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-gray-600 hover:text-blue-600 font-semibold">Log in</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-gray-600 hover:text-blue-600 font-semibold">Register</a>
-                        @endif
-                    @endauth
-                </div>
-                @endif
+    <section class="relative bg-white">
+        <div class="relative h-screen bg-cover bg-center" style="background-image: url('/img/chicekcare-landingpage.png');">
+            <div class="absolute inset-0 bg-gray-800 bg-opacity-50"></div>
+            
+            <!-- ChickCare Text -->
+            <div class="absolute top-4 left-4 z-20 text-xl font-semibold text-white flex items-center animate-fade-in">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.5 2C8.12 2 7 3.12 7 4.5C7 4.78 7.05 5.05 7.13 5.31C4.24 5.85 2 8.35 2 11.5C2 14.54 4.46 17 7.5 17H15C17.21 17 19 15.21 19 13C19 12.65 18.94 12.32 18.84 12H19C20.1 12 21 11.1 21 10C21 8.9 20.1 8 19 8H18.76C18.43 6.69 17.3 5.63 16 5.18V4.5C16 3.12 14.88 2 13.5 2C12.59 2 11.79 2.5 11.35 3.21C10.79 2.5 10.03 2 9.5 2M7.5 19C4 19 1 16 1 12.5C1 8.84 3.84 6 7.5 6C9.65 6 11.5 7.2 12.3 9.01C12.56 9 12.81 9 13 9H19C20.66 9 22 10.34 22 12C22 13.66 20.66 15 19 15H7.5Z" />
+                </svg>
+                <span class="text-green-400">ChickCare</span>
             </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="bg-blue-600">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center text-white">
-            <h1 class="text-4xl font-bold">Welcome to Chickcare</h1>
-            <p class="mt-4 text-lg">Under Construction</p>
-            @if (Route::has('login') && !auth()->check())
-            <div class="mt-6">
-                <a href="{{ route('login') }}" class="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-gray-200">
-                    Get Started
-                </a>
-            </div>
-            @endif
-        </div>
-    </header>
-
-    <!-- Features Section -->
-    <section class="py-12 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold">Why Choose Us?</h2>
-                <p class="mt-2 text-gray-600">Discover the features that make us stand out.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-2">Feature 1</h3>
-                    <p class="text-gray-600">Detailed explanation about feature 1.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-2">Feature 2</h3>
-                    <p class="text-gray-600">Detailed explanation about feature 2.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-2">Feature 3</h3>
-                    <p class="text-gray-600">Detailed explanation about feature 3.</p>
+            
+            <!-- Welcome Content -->
+            <div class="container mx-auto flex items-center justify-center h-full px-6">
+                <div class="relative z-10 text-center animate-fade-in">
+                    <h1 class="text-5xl font-bold text-white mb-4">Welcome to Chickcare</h1>
+                    <p class="text-lg text-white mb-6">
+                        Nurturing with Love, Caring with Heart.
+                    </p>
+                    <a href="{{ route('login') }}"
+                       class="px-6 py-3 text-gray-800 bg-white rounded shadow hover:bg-gray-100">
+                       Get Started
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 py-6 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-            <p>&copy; 2024 Chickcare. All rights reserved.</p>
-        </div>
-    </footer>
 </body>
 </html>
