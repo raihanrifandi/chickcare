@@ -42,7 +42,7 @@ class GejalaController extends Controller
         }
 
         // Format kode_gejala baru
-        $newKodeGejala = 'P' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+        $newKodeGejala = 'G' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
 
         // Simpan data gejala baru
         Gejala::create([

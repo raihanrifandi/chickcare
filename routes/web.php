@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\GejalaController;
 use App\Http\Controllers\PenyakitController;
 use App\Http\Controllers\RuleController;
+use App\Http\Controllers\DiagnosaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +25,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Nanti pindahin ke user kalo udah ada login
+Route::get('/user/diagnosa', [DiagnosaController::class, 'index'])->name('user.diagnosa');
+Route::post('/user/diagnosa', [DiagnosaController::class, 'store'])->name('diagnosa.process');
+
+Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+
+
 Route::middleware(['auth'])->group(function () {
     // Route untuk pengguna biasa
     Route::middleware(['role:user'])->group(function () {
-        Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
-        // isi disini nanti route untuk halaman pengguna biasa
+        
     });
 
     // Route untuk admin
