@@ -89,14 +89,14 @@
             <table class="min-w-full bg-white border">
                 <thead>
                     <tr class="bg-gray-100 border-b">
-                        <th class="py-3 px-4 text-left text-gray-600 font-semibold text-sm uppercase tracking-wider border text-center">
+                        <th class="w-16 py-3 px-4 text-left text-gray-600 font-semibold text-sm uppercase tracking-wider border text-center">
                             Kode</th>
                         <th class="py-3 px-4 text-left text-gray-600 font-semibold text-sm uppercase tracking-wider border text-center">
                             Gambar</th>
-                        <th class="py-3 px-4 text-left text-gray-600 font-semibold text-sm uppercase tracking-wider border text-center">
+                        <th class="w-175 py-3 px-4 text-left text-gray-600 font-semibold text-sm uppercase tracking-wider border text-center">
                             Penyakit</th>
                         <th
-                            class="py-3 px-4 text-center text-gray-600 font-semibold text-sm uppercase tracking-wider border text-center">
+                            class="w-4 py-3 px-4 text-center text-gray-600 font-semibold text-sm uppercase tracking-wider border text-center">
                             Aksi</th>
                     </tr>
                 </thead>
@@ -169,7 +169,7 @@
             <div class="space-y-4">
                 <div class="mb-4">
                     <h3 class="font-medium text-gray-700">Gambar Penyakit</h3>
-                    <img id="detailGambarPenyakit" alt="Gambar Penyakit" class="mt-2 w-full h-48 object-cover rounded">
+                    <img id="detailGambarPenyakit" alt="Gambar Penyakit" class="mt-2 w-full h-128 object-cover rounded">
                 </div>
                 
                 <div class="mb-4">
