@@ -45,7 +45,7 @@
             </div>
             <div>
                 <h2 class="text-lg font-semibold">Knowledge Base</h2>
-                <p class="text-3xl mt-2">{{ $knowledgeBase ?? 0 }}</p>
+                <p class="text-3xl mt-2">{{ \App\Models\BasisPengetahuan::count()}}</p>
             </div>
         </div>
     </div>
