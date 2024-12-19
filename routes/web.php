@@ -47,13 +47,13 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/penyakit/{kode_penyakit}', [PenyakitController::class, 'update'])->name('penyakit.update');
         Route::delete('/penyakit/{id}', [PenyakitController::class, 'destroy'])->name('penyakit.destroy');
 
-        // CRUD Knowledge Base
+        // CRUD Data Knowledge Base
         Route::get('/basis-pengetahuan', [RuleController::class, 'index'])->name('aturan.index');
-        Route::get('/basis-pengetahuan', [RuleController::class, 'create'])->name('rule.create');
-        Route::post('/basis-pengetahuan/store', [RuleController::class, 'store'])->name('rule.store');
-        Route::get('/basis-pengetahuan/{id}/edit', [RuleController::class, 'edit'])->name('rule.edit');
-        Route::put('/basis-pengetahuan/{id}', [RuleController::class, 'update'])->name('rule.update');
-        Route::delete('/basis-pengetahuan/{id}', [RuleController::class, 'destroy'])->name('rule.destroy');
+        Route::get('/basis-pengetahuan/create', [RuleController::class, 'create'])->name('aturan.create');
+        Route::post('/basis-pengetahuan/store', [RuleController::class, 'store'])->name('aturan.store');
+        Route::get('/basis-pengetahuan/{id}/edit', [RuleController::class, 'edit'])->name('aturan.edit');
+        Route::put('/basis-pengetahuan/{id}', [RuleController::class, 'update'])->name('aturan.update');
+        Route::delete('/basis-pengetahuan/{id}', [RuleController::class, 'destroy'])->name('aturan.destroy');
     });
 });
 
