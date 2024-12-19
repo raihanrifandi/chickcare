@@ -15,17 +15,17 @@
         <span class="mx-3">Dashboard</span>
       </a>
 
-      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('admin.dashboard') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('admin.dashboard') }}">
+      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('admin.gejala') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('admin.gejala') }}">
         <i class="fa-solid fa-layer-group w-6 h-6"></i>
         <span class="mx-3">Gejala</span>
      </a>
   
-      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('admin.dashboard') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('admin.dashboard') }}">
+      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('admin.penyakit') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('admin.penyakit') }}">
             <i class="fa-solid fa-location-dot w-6 h-6"></i>
           <span class="mx-3">Penyakit</span>
       </a>
 
-      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('admin.dashboard') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('admin.dashboard') }}">
+      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('admin.penyakit') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('admin.penyakit') }}">
         <i class="fa-solid fa-location-dot w-6 h-6"></i>
       <span class="mx-3">Basis Pengetahuan</span>
     </a>

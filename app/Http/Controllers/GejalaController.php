@@ -3,86 +3,79 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Gejala;
 
 class GejalaController extends Controller
 {
     public function __construct()
     {
-        // Ensure that only authenticated users can access this controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display the list of gejala.
-     */
     public function index()
     {
-        $gejala = Gejala::all();
-        return view('gejala.index', compact('gejala'));
+        $gejala = Gejala::paginate(10);
+        return view('admin.gejala', compact('gejala'));
     }
 
-    /**
-     * Show the form for creating a new gejala.
-     */
     public function create()
     {
         return view('gejala.create');
     }
 
-    /**
-     * Store a newly created gejala.
-     */
     public function store(Request $request)
     {
-        // Validate the input
         $request->validate([
             'nama_gejala' => 'required|string|max:255',
         ]);
 
-        // Insert the gejala into the database using the model
-        gejala::create([
+        // Ambil ID terakhir dari database
+        $lastGejala = Gejala::orderBy('kode_gejala', 'desc')->first();
+
+        // Tentukan kode_gejala baru
+        if ($lastGejala) {
+            // Ekstrak angka dari format ID terakhir dan tambahkan 1
+            $lastNumber = (int) substr($lastGejala->kode_gejala, 1);
+            $newNumber = $lastNumber + 1;
+        } else {
+            $newNumber = 1; // Jika belum ada data, mulai dari 1
+        }
+
+        // Format kode_gejala baru
+        $newKodeGejala = 'P' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+
+        // Simpan data gejala baru
+        Gejala::create([
+            'kode_gejala' => $newKodeGejala,
             'nama_gejala' => $request->nama_gejala,
         ]);
 
-        return redirect()->route('gejala.index'); // Redirect back to the gejala list page
+        return redirect()->route('admin.gejala')->with('success', 'Gejala berhasil ditambahkan.');
     }
 
-    /**
-     * Show the form for editing an existing gejala.
-     */
-    public function edit($id)
+    public function edit($kode_gejala)
     {
-        $gejala = Gejala::findOrFail($id);
-        return view('gejala.edit', compact('gejala'));
+        $gejala = Gejala::findOrFail($kode_gejala);
+        return view('', compact('gejala'));
     }
 
-    /**
-     * Update the specified gejala.
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, $kode_gejala)
     {
-        // Validate the input
-        $request->validate([
+        $validated = $request->validate([
             'nama_gejala' => 'required|string|max:255',
         ]);
 
-        // Find the gejala by ID and update it
-        $gejala = Gejala::findOrFail($id);
-        $gejala->update([
-            'nama_gejala' => $request->nama_gejala,
-        ]);
+        $gejala = Gejala::findOrFail($kode_gejala);
+        $gejala->nama_gejala = $validated['nama_gejala'];
+        $gejala->save();
 
-        return redirect()->route('gejala.index'); // Redirect back to the gejala list page
+        return redirect()->route('admin.gejala')->with('success', 'Gejala berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified gejala from the database.
-     */
-    public function destroy($id)
-    {
-        // Delete the gejala record using the model
-        Gejala::destroy($id);
 
-        return redirect()->route('gejala.index'); // Redirect back to the gejala list page
+    public function destroy($kode_gejala)
+    {
+        Gejala::destroy($kode_gejala);
+        return redirect()->route('admin.gejala');
     }
 }

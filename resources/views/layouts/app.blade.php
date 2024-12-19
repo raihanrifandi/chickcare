@@ -7,8 +7,16 @@
 
         <title>Admin</title>
 
+        <!-- Fontawesome Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- <script src="{{ asset('js/gejala.js') }}"></script> --}}
+        <script src="{{ asset('js/penyakit.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
     </head>
     <body>
         <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200 font-roboto">
@@ -25,5 +33,7 @@
     
             </div>
         </div>
+        
+        @stack('scripts')
     </body>
 </html>

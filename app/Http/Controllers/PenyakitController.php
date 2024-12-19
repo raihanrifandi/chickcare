@@ -4,98 +4,87 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Penyakit;
+use Illuminate\Support\Facades\Storage;
 
 class PenyakitController extends Controller
 {
     public function __construct()
     {
-        // Ensure that only authenticated users can access this controller
-        $this->middleware('auth');
+        $this->middleware(['auth']); 
     }
 
-    /**
-     * Display the list of penyakit.
-     */
     public function index()
     {
-        $penyakit = Penyakit::all();
-        return view('penyakit.index', compact('penyakit'));
+        $penyakit = Penyakit::paginate(10);
+        return view('admin.penyakit', compact('penyakit'));
     }
 
-    /**
-     * Show the form for creating a new penyakit.
-     */
-    public function create()
-    {
-        return view('penyakit.create');
-    }
-
-    /**
-     * Store a newly created penyakit.
-     */
     public function store(Request $request)
     {
-        // Validate the input
-        $request->validate([
+        $validated = $request->validate([
             'nama_penyakit' => 'required|string|max:255',
             'detail_penyakit' => 'required|string|max:500',
             'solusi_penyakit' => 'required|string|max:500',
-            'gambar_penyakit' => 'required|string|max:255',
+            'gambar_penyakit' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Insert the penyakit into the database using the model
+        // Membuat ID custom berdasarkan urutan terakhir
+        $lastPenyakit = Penyakit::latest('kode_penyakit')->first(); // Ambil data penyakit terakhir
+        $nextId = $lastPenyakit ? (intval(substr($lastPenyakit->kode_penyakit, 1)) + 1) : 1; // Increment ID terakhir
+        $kode_penyakit = 'P' . str_pad($nextId, 3, '0', STR_PAD_LEFT); // Format menjadi P001, P002, dst.
+
+        if ($request->hasFile('gambar_penyakit')) {
+            $validated['gambar_penyakit'] = $request->file('gambar_penyakit')->store('uploads', 'public');
+        }
+
+        // Menambahkan kode penyakit ke data yang akan disimpan
         Penyakit::create([
+            'kode_penyakit' => $kode_penyakit,
             'nama_penyakit' => $request->nama_penyakit,
             'detail_penyakit' => $request->detail_penyakit,
             'solusi_penyakit' => $request->solusi_penyakit,
-            'gambar_penyakit' => $request->gambar_penyakit,
+            'gambar_penyakit' => $validated['gambar_penyakit'] ?? null,
         ]);
 
-        return redirect()->route('penyakit.index'); // Redirect back to the penyakit list page
+        return redirect()->route('admin.penyakit')->with('success', 'Data penyakit berhasil ditambahkan');
     }
 
-    /**
-     * Show the form for editing an existing penyakit.
-     */
-    public function edit($id)
+    public function update(Request $request, $kode_penyakit)
     {
-        $penyakit = Penyakit::findOrFail($id);
-        return view('penyakit.edit', compact('penyakit'));
-    }
-
-    /**
-     * Update the specified penyakit.
-     */
-    public function update(Request $request, $id)
-    {
-        // Validate the input
-        $request->validate([
+        $validated = $request->validate([
             'nama_penyakit' => 'required|string|max:255',
             'detail_penyakit' => 'required|string|max:500',
             'solusi_penyakit' => 'required|string|max:500',
-            'gambar_penyakit' => 'required|string|max:255',
+            'gambar_penyakit' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Find the penyakit by ID and update it
-        $penyakit = Penyakit::findOrFail($id);
-        $penyakit->update([
-            'nama_penyakit' => $request->nama_penyakit,
-            'detail_penyakit' => $request->detail_penyakit,
-            'solusi_penyakit' => $request->solusi_penyakit,
-            'gambar_penyakit' => $request->gambar_penyakit,
-        ]);
+        $penyakit = Penyakit::findOrFail($kode_penyakit);
 
-        return redirect()->route('penyakit.index'); // Redirect back to the penyakit list page
+        if ($request->hasFile('gambar_penyakit')) {
+            // Hapus file lama jika ada
+            if ($penyakit->gambar_penyakit) {
+                Storage::disk('public')->delete($penyakit->gambar_penyakit);
+            }
+
+            // Simpan file baru
+            $validated['gambar_penyakit'] = $request->file('gambar_penyakit')->store('uploads', 'public');
+        }
+
+        $penyakit->update($validated);
+
+        return redirect()->route('admin.penyakit')->with('success', 'Data penyakit berhasil diperbarui');
     }
-
-    /**
-     * Remove the specified penyakit from the database.
-     */
-    public function destroy($id)
+ 
+    public function destroy($kode_penyakit)
     {
-        // Delete the penyakit record using the model
-        Penyakit::destroy($id);
+        $penyakit = Penyakit::findOrFail($kode_penyakit);
 
-        return redirect()->route('penyakit.index'); // Redirect back to the penyakit list page
+        if ($penyakit->gambar_penyakit) {
+            Storage::delete($penyakit->gambar_penyakit);
+        }
+
+        $penyakit->delete();
+
+        return redirect()->route('admin.penyakit')->with('success', 'Data Penyakit berhasil dihapus!');
     }
 }

@@ -11,10 +11,17 @@ class Penyakit extends Model
 
     protected $table = 'penyakit';
 
+    protected $primaryKey = 'kode_penyakit';
+    public $incrementing = false;
+    protected $keyType = 'string'; 
+
     protected $fillable = [
+        'kode_penyakit',
         'nama_penyakit',
         'detail_penyakit',
         'solusi_penyakit',
         'gambar_penyakit',
     ];
+
+    public $timestamps = true;
 }
