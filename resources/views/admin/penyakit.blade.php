@@ -86,7 +86,7 @@
 
         <!-- Table Gejala -->
         <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-            <table class="min-w-full bg-white border ">
+            <table class="min-w-full bg-white border">
                 <thead>
                     <tr class="bg-gray-100 border-b">
                         <th class="py-3 px-4 text-left text-gray-600 font-semibold text-sm uppercase tracking-wider border text-center">
@@ -100,11 +100,11 @@
                             Aksi</th>
                     </tr>
                 </thead>
-                <tbody id="penyakitTableBody" class="text-gray-700 ">
+                <tbody id="penyakitTableBody" class="text-gray-700">
                     @foreach ($penyakit as $data)
                         <tr class="hover:bg-gray-50 transition duration-200">
                             <td class="py-4 px-4 border">{{ $data->kode_penyakit }}</td>
-                            <td class="py-4 px-4 border ">
+                            <td class="py-4 px-4 border">
                                 @if ($data->gambar_penyakit)
                                     <img src="{{ asset('storage/' . $data->gambar_penyakit) }}" alt="Gambar Penyakit Ayam"
                                         class="w-24 h-24 object-cover rounded">
@@ -113,7 +113,17 @@
                                 @endif
                             </td>
                             <td class="py-4 px-4 border">{{ $data->nama_penyakit }}</td>
-                            <td class="py-12 px-8 border flex justify-center items-center text-center">
+                            <td class="py-12 px-8 border flex justify-center items-center gap-2">
+                                <!-- Tombol Detail -->
+                                <button onclick="openDetailModal(this)" 
+                                    data-kode_penyakit="{{ $data->kode_penyakit }}"
+                                    data-nama_penyakit="{{ $data->nama_penyakit}}"
+                                    data-detail_penyakit="{{ $data->detail_penyakit}}"
+                                    data-solusi_penyakit="{{ $data->solusi_penyakit}}"
+                                    data-gambar_penyakit="{{ $data->gambar_penyakit}}"
+                                    class="bg-green-500 text-white px-4 py-1 rounded-lg hover:bg-green-600 transition duration-200 shadow">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
                                 <!-- Tombol Edit -->
                                 <button onclick="openEditModal(this)" 
                                     data-kode_penyakit="{{ $data->kode_penyakit }}"
@@ -143,6 +153,46 @@
         </div>
         <div class="mt-6">
             {{ $penyakit->links('components.pagination') }}
+        </div>
+    </div>
+
+    <!-- Modal Detail Penyakit -->
+    <div id="detailModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl" style="overflow-y: auto; max-height: 80vh;">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-gray-800">Detail Penyakit</h2>
+                <button onclick="closeDetailModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="mb-4">
+                    <h3 class="font-medium text-gray-700">Gambar Penyakit</h3>
+                    <img id="detailGambarPenyakit" alt="Gambar Penyakit" class="mt-2 w-full h-48 object-cover rounded">
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="font-medium text-gray-700">Nama Penyakit</h3>
+                    <p id="detailNamaPenyakit" class="mt-1 text-gray-600"></p>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="font-medium text-gray-700">Detail Penyakit</h3>
+                    <p id="detailDetailPenyakit" class="mt-1 text-gray-600"></p>
+                </div>
+                
+                <div class="mb-4">
+                    <h3 class="font-medium text-gray-700">Solusi Penyakit</h3>
+                    <p id="detailSolusiPenyakit" class="mt-1 text-gray-600"></p>
+                </div>
+            </div>
+            
+            <div class="mt-6 flex justify-end">
+                <button onclick="closeDetailModal()" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition duration-200">
+                    Tutup
+                </button>
+            </div>
         </div>
     </div>
 
@@ -222,8 +272,47 @@
     </div>
 @endsection
 
-{{-- Javascript Logic --}}
-@push('scripts') 
-    <script src="{{ asset('js/penyakit.js') }}"></script> 
-    <script src="{{ asset('js/search.js') }}"></script> 
+@push('scripts')
+    <script>
+        // Add these new functions for the detail modal
+        function openDetailModal(button) {
+            const modal = document.getElementById('detailModal');
+            const kodePenyakit = button.getAttribute('data-kode_penyakit');
+            const namaPenyakit = button.getAttribute('data-nama_penyakit');
+            const detailPenyakit = button.getAttribute('data-detail_penyakit');
+            const solusiPenyakit = button.getAttribute('data-solusi_penyakit');
+            const gambarPenyakit = button.getAttribute('data-gambar_penyakit');
+
+            // Populate the detail modal
+            document.getElementById('detailNamaPenyakit').textContent = namaPenyakit;
+            document.getElementById('detailDetailPenyakit').textContent = detailPenyakit;
+            document.getElementById('detailSolusiPenyakit').textContent = solusiPenyakit;
+            
+            // Handle image
+            const imgElement = document.getElementById('detailGambarPenyakit');
+            if (gambarPenyakit) {
+                imgElement.src = `/storage/${gambarPenyakit}`;
+                imgElement.style.display = 'block';
+            } else {
+                imgElement.style.display = 'none';
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.add('hidden');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const detailModal = document.getElementById('detailModal');
+            if (event.target === detailModal) {
+                closeDetailModal();
+            }
+        }
+    </script>
+    <script src="{{ asset('js/penyakit.js') }}"></script>
+    <script src="{{ asset('js/search.js') }}"></script>
 @endpush
