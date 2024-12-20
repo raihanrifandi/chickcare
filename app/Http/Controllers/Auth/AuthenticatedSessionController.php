@@ -34,7 +34,9 @@ class AuthenticatedSessionController extends Controller
             return redirect('/admin');
         }
 
-        return redirect('/dashboard'); 
+        if ($role === 'user') {
+            return redirect('/user');
+        }
     }
 
     /**
