@@ -68,7 +68,7 @@
 
                     <!-- Footer -->
                     <div class="mt-8 text-center text-gray-400 text-xs">
-                        © KELOMPOK SISPAK 2024 ALL RIGHTS RESERVED
+                        © KELOMPOK 2A SISPAK 2024 ALL RIGHTS RESERVED
                     </div>
                 </div>
             </div>
