@@ -8,7 +8,7 @@
                     <h1 class="text-2xl font-semibold mb-2">Selamat Datang Kembali!👋</h1>
                     <p class="text-gray-600 text-sm mb-8">
                         di website Sistem Pakar Diagnosa Penyakit Pada Ayam.<br>
-                        Mulai diagnosa penyakit pada ayam-mu1.
+                        Mulai diagnosa penyakit pada ayam-mu!
                     </p>
 
                     <!-- Session Status -->

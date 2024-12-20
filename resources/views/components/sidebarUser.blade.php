@@ -9,25 +9,20 @@
     </div>
 
     <nav class="mt-10">
-      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('admin.dashboard') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('admin.dashboard') }}">
-        <i class="fa-solid fa-chart-line"></i>
+      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('user.dashboard') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('user.dashboard') }}">
+        <i class="fa-solid fa-house"></i>
         <span class="mx-3">Dashboard</span>
       </a>
 
-      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('admin.gejala') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('admin.gejala') }}">
-        <i class="fa-solid fa-stethoscope"></i>
-        <span class="mx-3">Gejala</span>
+      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('user.diagnosa') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('user.diagnosa') }}">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <span class="mx-3">Diagnosa</span>
      </a>
   
-      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('admin.penyakit') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('admin.penyakit') }}">
-        <i class="fa-solid fa-virus"></i>
-          <span class="mx-3">Penyakit</span>
+      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('user.riwayat') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('user.riwayat') }}">
+        <i class="fa-solid fa-history"></i>
+          <span class="mx-3">Riwayat Diagnosa</span>
       </a>
-
-      <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100 {{ Route::is('aturan.index') ? 'bg-gray-700 bg-opacity-25' : '' }}" href="{{ route('aturan.index') }}">
-        <i class="fa-solid fa-brain"></i>
-      <span class="mx-3">Basis Pengetahuan</span>
-    </a>
 
     <a class="flex items-center px-6 py-2 mt-4 text-white hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100" href="{{ route('logout') }}" onclick="confirmLogout(event)"; 
     document.getElementById('logout-form').submit();"> 
