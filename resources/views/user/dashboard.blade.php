@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.user')
 
 @section('title', 'Dashboard User')
 
@@ -51,7 +51,7 @@
     </div>
 
     <!-- Carousel -->
-    <div id="default-carousel" class="relative w-full" data-carousel="slide">
+    <div id="default-carousel" class="relative w-full z-0" data-carousel="slide">
         <!-- Carousel wrapper -->
         <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
             <!-- Item 1 -->

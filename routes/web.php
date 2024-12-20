@@ -9,6 +9,7 @@ use App\Http\Controllers\GejalaController;
 use App\Http\Controllers\PenyakitController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\DiagnosaController;
+use App\Http\Controllers\RiwayatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,17 +26,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Nanti pindahin ke user kalo udah ada login
-Route::get('/user/diagnosa', [DiagnosaController::class, 'index'])->name('user.diagnosa');
-Route::post('/user/diagnosa', [DiagnosaController::class, 'store'])->name('diagnosa.process');
-
-Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
-
 
 Route::middleware(['auth'])->group(function () {
     // Route untuk pengguna biasa
     Route::middleware(['role:user'])->group(function () {
-        
+        // Nanti pindahin ke user kalo udah ada login
+        Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
+        Route::get('/user/diagnosa', [DiagnosaController::class, 'index'])->name('user.diagnosa');
+        Route::get('/user/riwayat-diagnosa', [RiwayatController::class, 'index'])->name('user.riwayat');
+        Route::get('/user/riwayat-diagnosa/detail/{id_hasil}', [RiwayatController::class, 'detail'])->name('user.detail');
+        Route::post('/user/inference', [DiagnosaController::class, 'process'])->name('diagnosa.inference');
+
     });
 
     // Route untuk admin
