@@ -26,7 +26,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::middleware(['auth'])->group(function () {
     // Route untuk pengguna biasa
     Route::middleware(['role:user'])->group(function () {
